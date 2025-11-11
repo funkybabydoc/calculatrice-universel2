@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculatrice Scientifique</title>
+  <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🧮 Calculatrice Scientifique Universelle</h1>
+
+    <input type="text" id="display" readonly placeholder="0">
+
+    <div class="buttons">
+      <button class="special" onclick="clearDisplay()">AC</button>
+      <button class="backspace" onclick="deleteLast()">←</button>
+      <button onclick="append('(')">(</button>
+      <button onclick="append(')')">)</button>
+
+      <button onclick="append('**2')">x²</button>
+      <button onclick="append('sin(')">sin</button>
+      <button onclick="append('cos(')">cos</button>
+      <button onclick="append('tan(')">tan</button>
+
+      <button onclick="append('sqrt(')">√</button>
+      <button onclick="append('7')">7</button>
+      <button onclick="append('8')">8</button>
+      <button onclick="append('9')">9</button>
+
+      <button onclick="append('/')">÷</button>
+      <button onclick="append('4')">4</button>
+      <button onclick="append('5')">5</button>
+      <button onclick="append('6')">6</button>
+
+      <button onclick="append('*')">×</button>
+      <button onclick="append('1')">1</button>
+      <button onclick="append('2')">2</button>
+      <button onclick="append('3')">3</button>
+
+      <button onclick="append('-')">−</button>
+      <button onclick="append('0')">0</button>
+      <button onclick="append('.')">.</button>
+      <button onclick="append('+')">+</button>
+
+      <button class="equal" onclick="calculer()">=</button>
+    </div>
+
+    <h2 id="resultat">Résultat : ...</h2>
+
+    <div id="historique">
+      <h3>🧾 Historique</h3>
+      <ul id="historique-liste"></ul>
+    </div>
+
+    <p class="hint">sin/cos/tan utilisent les <strong>degrés</strong> — cliquez sur "=" pour enregistrer dans l’historique.</p>
+  </div>
+
+  <script>
+    let historique = [];
+
+    function append(value) {
+      const d = document.getElementById("display");
+      d.value = (d.value || "") + value;
+    }
+
+    function clearDisplay() {
+      document.getElementById("display").value = "";
+      document.getElementById("resultat").innerText = "Résultat : ...";
+    }
+
+    function deleteLast() {
+      const d = document.getElementById("display");
+      d.value = d.value.slice(0, -1);
+    }
+
+    async function calculer() {
+      const expr = document.getElementById("display").value;
+      if (!expr || expr.trim() === "") {
+        document.getElementById("resultat").innerText = "Résultat : rien à calculer";
+        return;
+      }
+
+      try {
+        const response = await fetch('/calcul', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ expression: expr })
+        });
+
+        const data = await response.json();
+        const result = data.resultat;
+
+        document.getElementById("resultat").innerText = "Résultat : " + result;
+        ajouterHistorique(expr, result);
+      } catch (err) {
+        document.getElementById("resultat").innerText = "Résultat : Erreur réseau";
+        console.error(err);
+      }
+    }
+
+    function ajouterHistorique(expr, result) {
+      const item = `${expr} = ${result}`;
+      historique.unshift(item);
+      if (historique.length > 8) historique.pop();
+
+      const ul = document.getElementById("historique-liste");
+      ul.innerHTML = "";
+      historique.forEach((h) => {
+        const li = document.createElement("li");
+        li.textContent = h;
+        li.addEventListener("click", () => {
+          document.getElementById("display").value = h.split(" = ")[0];
+        });
+        ul.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>

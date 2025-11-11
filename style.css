@@ -1,0 +1,151 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #28313b, #485461);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 30px;
+  width: 380px;
+  text-align: center;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s ease;
+}
+
+.container:hover {
+  transform: translateY(-3px);
+}
+
+#display {
+  width: 90%;
+  height: 45px;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: right;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  transition: 0.2s;
+}
+
+#display:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  background-color: #3498db;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  color: white;
+  font-size: 18px;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+}
+
+button:hover {
+  background-color: #1abc9c;
+  transform: scale(1.05);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.4);
+}
+
+button:active {
+  transform: scale(0.98);
+  background-color: #16a085;
+}
+
+button.special {
+  background-color: #e74c3c;
+}
+
+button.special:hover {
+  background-color: #c0392b;
+}
+
+button.equal {
+  background-color: #f1c40f;
+  color: #2c3e50;
+  font-weight: bold;
+}
+
+button.equal:hover {
+  background-color: #f39c12;
+}
+
+#resultat {
+  margin-top: 20px;
+  color: #f1c40f;
+  font-size: 20px;
+}
+
+#historique {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: left;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+#historique h3 {
+  margin: 0;
+  color: #1abc9c;
+  font-size: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 5px;
+}
+
+#historique-liste {
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0 0;
+}
+
+#historique-liste li {
+  padding: 6px;
+  margin-bottom: 4px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.15);
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+#historique-liste li:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.hint {
+  font-size: 12px;
+  opacity: 0.9;
+  margin-top: 8px;
+}
+
+/* Bouton flèche retour */
+button.backspace {
+  background-color: #9b59b6;
+  font-weight: bold;
+}
+
+button.backspace:hover {
+  background-color: #8e44ad;
+}
+
